@@ -197,3 +197,55 @@ synchronizedList(List<T> list)//返回指定列表支持的同步（线程安全
 synchronizedMap(Map<K,V> m) //返回由指定映射支持的同步（线程安全的）Map。
 synchronizedSet(Set<T> s) //返回指定 set 支持的同步（线程安全的）set。
 ```
+
+## 集合注意事项
+>参考《阿里巴巴 Java 开发手册》
+### 集合判空
+  >**判断所有集合内部的元素是否为空，使用 isEmpty() 方法，而不是 size()==0 的方式。**
+
+ 这是因为 isEmpty() 方法的可读性更好，并且时间复杂度为 O(1)。<br>
+ 绝大部分我们使用的集合的 size() 方法的时间复杂度也是 O(1)，不过，也有很多复杂度不是 O(1) 的，比如 java.util.concurrent 包下的某些集合（ConcurrentLinkedQueue 、ConcurrentHashMap...）。
+
+### 集合转Map
+  > 在使用 java.util.stream.Collectors 类的 toMap() 方法转为 Map 集合时，一定要注意当 value 为 null 时会抛 NPE 异常。
+
+### 集合遍历
+  >不要在 foreach 循环里进行元素的 remove/add 操作。remove 元素请使用 Iterator 方式，如果并发操作，需要对 Iterator 对象加锁。
+
+通过反编译你会发现 foreach 语法底层其实还是依赖 Iterator 。不过， remove/add 操作直接调用的是集合自己的方法，而不是 Iterator 的 remove/add方法<br>
+这就导致 Iterator 莫名其妙地发现自己有元素被 remove/add ，然后，它就会抛出一个 ConcurrentModificationException 来提示用户发生了并发修改异常。这就是单线程状态下产生的 fail-fast 机制。
+>fail-fast 机制 ：多个线程对 fail-fast 集合进行修改的时候，可能会抛出ConcurrentModificationException。 即使是单线程下也有可能会出现这种情况，上面已经提到过。
+
+### 集合去重
+  >可以利用 Set 元素唯一的特性，可以快速对一个集合进行去重操作，避免使用 List 的 contains() 进行遍历去重或者判断包含操作。
+
+### 集合转数组
+  >使用集合转数组的方法，必须使用集合的 toArray(T[] array)，传入的是类型完全一致、长度为 0 的空数组。
+
+### 数组转集合
+  >使用工具类 Arrays.asList() 把数组转换成集合时，不能使用其修改集合相关的方法， 它的 add/remove/clear 方法会抛出 UnsupportedOperationException 异常。
+
+1. Arrays.asList()是泛型方法，传递的数组必须是对象数组，而不是基本类型。
+> 当传入一个原生数据类型数组时，Arrays.asList() 的真正得到的参数就不是数组中的元素，而是数组对象本身！此时 List 的唯一元素就是这个数组，这也就解释了上面的代码。
+
+我们使用包装类型数组就可以解决这个问题。
+```java
+Integer[] myArray = {1, 2, 3};
+```
+
+2. 使用集合的修改方法: add()、remove()、clear()会抛出异常。
+>Arrays.asList() 方法返回的并不是 java.util.ArrayList ，而是 java.util.Arrays 的一个内部类,这个内部类并没有实现集合的修改方法或者说并没有重写这些方法。
+
+***那我们如何正确的将数组转换为 ArrayList ?***<br>
+* 最简便的方法:
+```java
+List list = new ArrayList<>(Arrays.asList("a", "b", "c"))
+```
+* 使用 Java8 的 Stream(推荐)
+```java
+Integer [] myArray = { 1, 2, 3 };
+List myList = Arrays.stream(myArray).collect(Collectors.toList());
+//基本类型也可以实现转换（依赖boxed的装箱操作）
+int [] myArray2 = { 1, 2, 3 };
+List myList = Arrays.stream(myArray2).boxed().collect(Collectors.toList());
+```
