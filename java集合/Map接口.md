@@ -1,12 +1,12 @@
 ## Map接口
 ---
 ### HashMap和HashTable的区别
-* **线程安全：**HashMap线程不安全，HashTable线程安全，但Hashtable基本所有方法都是用synchronized修饰，效率很低，如果想使用线程安全的Map可以使用ConcurrentHashMap
-* **数据结构：**HashMap在1.8之后在处理哈希冲突方面做了很大改变，当链表长度达到阈值（默认是8）时，会将链表转为红黑树（再转为红黑树之前会判断数组长度是否小于64，if是会先对数组经行扩容而不是将链表转为红黑树），以减少搜索时间
-* **初始容量和扩容大小：**
+* **线程安全**：HashMap线程不安全，HashTable线程安全，但Hashtable基本所有方法都是用synchronized修饰，效率很低，如果想使用线程安全的Map可以使用ConcurrentHashMap
+* **数据结构**：HashMap在1.8之后在处理哈希冲突方面做了很大改变，当链表长度达到阈值（默认是8）时，会将链表转为红黑树（再转为红黑树之前会判断数组长度是否小于64，if是会先对数组经行扩容而不是将链表转为红黑树），以减少搜索时间
+* **初始容量和扩容大小**：
   1. Hashtable初始容量是11，每次扩容容量会变为原来的2n+1；HHashMap初始容量16，每次扩容会变为原来的2倍
   2. Hashtable创建时给定了初始值，那么Hashtable会直接使用你给定的初值；而HashMap会扩充为2的幂次。
-* **Null：**HashMap允许存在null key和null value，null key只允许存在唯一一个；Hashtable的key和value都不允许为空，否则会抛出NullPointerException
+* **Null**：HashMap允许存在null key和null value，null key只允许存在唯一一个；Hashtable的key和value都不允许为空，否则会抛出NullPointerException
 
 ### HashMap和HashSet的区别
 * HashSet底层维护一个HashMap，除个别方法不得不实现其他都是直接调用HashMap的方法；
