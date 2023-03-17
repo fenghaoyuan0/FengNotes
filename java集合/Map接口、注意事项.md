@@ -23,7 +23,7 @@ TreeMap 和HashMap 都继承自AbstractMap ，但是需要注意的是TreeMap它
 > 综上，相比于HashMap来说 TreeMap 主要多了对集合中的元素根据键排序的能力以及对集合内元素的搜索的能力。
 
 ### HashSet如何检查重复元素
-引入《Head first java》第二版：
+引入《Head first java》第二版：  
 >当你把对象加入HashSet时，HashSet 会先计算对象的hashcode值来判断对象加入的位置，同时也会与其他加入的对象的 hashcode 值作比较，如果没有相符的 hashcode，HashSet 会假设对象没有重复出现。但是如果发现有相同 hashcode 值的对象，这时会调用equals()方法来检查 hashcode 相等的对象是否真的相同。如果两者相同，HashSet 就不会让加入操作成功。
 
 ### HashMap的底层实现

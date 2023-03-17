@@ -1,0 +1,33 @@
+# 基础（中）
+## objct
+### == 和 equals()的equals()
+* 对于基本数据类型，==比较的是值
+* 对于引用数据类型，==比较的是对象的内存地址
+> Java是值得传递
+equals()不能用来判断基本数据类型的变量,只能用来判断两个对象是否相等.
+* 类没重写equals()方法:通过equals()比较该类的两个对象时,等价于==,比较的是对象的内存地址。
+* 类重写equals()方法:一般我们重写equals()方法用来比较对象的属性是否相等,相等返回true
+> String类的重写equals()方法
+```
+public boolean equals(Object anObject) {
+    if (this == anObject) {
+        return true;
+    }
+    if (anObject instanceof String) {
+        String anotherString = (String)anObject;
+        int n = value.length;
+        if (n == anotherString.value.length) {
+            char v1[] = value;
+            char v2[] = anotherString.value;
+            int i = 0;
+            while (n-- != 0) {
+                if (v1[i] != v2[i])
+                    return false;
+                i++;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+```

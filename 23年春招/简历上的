@@ -1,0 +1,37 @@
+### 自我介绍
+### 项目能总结下来
+### 接口调用 跨越问题
+### Spring、MyBatis
+### 数据库可以说一说用了那些索引、单元测试怎么测注意什么
+### 项目难点 ！！！
+不同的保单类型会生成不同的保单 解决：使用模板+策略模式解决[模板+策略设计模式介绍及实战](https://blog.csdn.net/Java__EE/article/details/127406431?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EAD_ESQUERY%7Eyljh-1-127406431-blog-118517797.pc_relevant_3mothn_strategy_and_data_recovery&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EAD_ESQUERY%7Eyljh-1-127406431-blog-118517797.pc_relevant_3mothn_strategy_and_data_recovery&utm_relevant_index=2)
+
+
+### nacos注册中心
+### 重点常考 ！！
+基础 集合 io 锁 多线程 线程池 JVM内存模型 双亲委派
+（如果觉得 Java 学习路线涉及到的东西太多，又没时间学完的话，
+我建议你先以Java 基础、集合、并发MySQL、Redis 这些知识点为主，
+大厂以及中小厂的面试问的比较多的就是这些知识点(不信的话，你可以去多找一些面经看看)，非常非常重要）
+#### 数据库
+基本语法 索引 引擎 优化方法
+#### Redis
+持久化 缓存 集群
+### 框架 ！！
+SSM（ioc，aop、mvc、mybatis缓存机制） SpringBoot 注解 自动配置
+### 分布式
+SpringCloud 服务网关 服务调用
+### 设计模式
+单例模式 工厂模式 策略模式 模板方法
+### 网络
+TCP/IP、HTTP、HTTPS 三次握手 两次挥手
+
+
+自我介绍：
+面试官您好！我是冯浩原。大学期间我利用课外时间学习了Java以及Spring、SpringBoot、MyBatis等框架，
+在校期间做过一个医疗管理系统，这个系统主要用了SSM框架，用Dubbo和ZooKeeper实现分布式，
+在2022年的7-12月在上海的众安保险技术研发中心做Java后端开发的实习生，参与了当时慧用工项目的开发，
+这个项目是基于SpringBoot的微服务项目，自己主要负责的是出单模块以及开发后对接口进行单元测试和后期的维护
+对内的接口：通过访问数据库封装接口所需参数远程调用数仓的抽数和推数接，掌握了基于SpringCloud的微服务项目跨域的接口调用
+生活中我是个比较积极乐观的人，一般会通过运动和看书听音乐的方式来放松。非常想加入贵公司，也很喜欢贵公司的文化
+和技术氛围。
