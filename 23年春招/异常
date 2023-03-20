@@ -1,0 +1,73 @@
+# Exception和Error的区别
+**Exception**一般是程序可以处理的异常，分为受检查（Checked Exception）异常和不受检查异常（Unchecked Exception）。<br>
+**Errors**是程序不可处理的异常，会使线程终止。比如：Java 虚拟机运行错误（Virtual MachineError）、虚拟机内存不够错误(OutOfMemoryError)、类定义错误（NoClassDefFoundError）等
+
+# Checked Exception和Unchecked Exception
+**Checked Exception**是不可以通过编译的，需要被catch或者throw<br>
+**Unchecked Exception**即使不处理也是可以通过编译的，RuntimeException以及它的子类都是Unchecked Exception。<br>
+
+RuntimeException子类常见的有：
+* NullPointerException(空指针错误)<br>
+* IllegalArgumentException(参数错误比如方法入参类型错误)<br>
+* NumberFormatException（字符串转换为数字格式错误，IllegalArgumentException的子类）<br>
+* ArrayIndexOutOfBoundsException（数组越界错误）<br>
+* ClassCastException（类型转换错误）<br>
+* ArithmeticException（算术错误）<br>
+* SecurityException （安全错误比如权限不够）<br>
+* UnsupportedOperationException(不支持的操作错误比如重复创建同一用户)
+
+# Throwable类常用方法
+* getMessage():返回异常发生时简要信息。
+* toString();返回异常发生时的详细信息。
+* getLocalizedMessage();返回异常发生时的本地化信息；子类可以覆盖该方法，如果不覆盖和getMessage()返回的结果一样
+* printStackTrace();在控制台打印Throwable对象封装的信息。
+
+# try-catch-finally
+try块：用于捕获异常<br>
+catch块：用于处理捕获到的异常<br>
+finally块：是否捕获到异常都会执行的代码块<br>
+
+如果try和catch块中有return语句，finally中的代码会在返回前执行
+
+finally块中不要有return语句，finally块中的return会覆盖try中的return，因为 try 语句中的 return 返回值会先被暂存在一个本地变量中，当执行到 finally 语句中的 return 之后，这个本地变量的值就变为了 finally 语句中的 return 返回值。
+
+# try-with-resources
+在需要关闭close()资源(InputStream、OutputStream 、Scanner 、PrintWriter)的情况下可使用try-with-resources来替代try-catch-finally
+能够有效的简化代码
+
+改造前：
+```java
+//读取文本文件的内容
+Scanner scanner = null;
+try {
+    scanner = new Scanner(new File("D://read.txt"));
+    while (scanner.hasNext()) {
+        System.out.println(scanner.nextLine());
+    }
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+} finally {
+    if (scanner != null) {
+        scanner.close();
+    }
+}
+
+```
+
+改造后:
+``` java
+try (Scanner scanner = new Scanner(new File("test.txt"))) {
+    while (scanner.hasNext()) {
+        System.out.println(scanner.nextLine());
+    }
+} catch (FileNotFoundException fnfe) {
+    fnfe.printStackTrace();
+}
+```
+
+# 异常使用的注意事项
+
+1. 不要将异常定义为静态变量。因为会导致异常栈信息错乱，每次手动抛出异常都要new一个异常对象抛出
+2. 抛出的异常要详细，可以是子类就不要抛父类（比如字符串转换为数字格式错误的时候应该抛出NumberFormatException而不是其父类IllegalArgumentException。）
+3. 抛出的异常要有意义
+4. 使用日志打印异常就不要抛出异常
