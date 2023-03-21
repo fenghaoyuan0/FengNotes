@@ -1,0 +1,80 @@
+# 泛型
+
+JDK5新特性，编译器可以对泛型参数进行检测，并根据泛型参数指定传入参数的类型，能够提升代码的可读性和稳定性。<br>
+
+``` Java
+ArrayList<Person> persons = new ArrayList<Person>
+```
+这行代码指明了该ArrayList对象只能传入Person元素，传入其他元素会报错.
+
+## 泛型的使用方式
+1. 泛型类
+``` Java
+//此处T可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型
+//在实例化泛型类时，必须指定T的具体类型
+public class Generic<T>{
+
+    private T key;
+
+    public Generic(T key) {
+        this.key = key;
+    }
+
+    public T getKey(){
+        return key;
+    }
+}
+//如何实例化泛型类：
+ Generic<Integer> genericInteger = new Generic<Integer>(123456);
+
+
+2. 泛型接口
+``` Java
+ public interface Generator<T> {
+    public T method();
+}
+```
+实现泛型接口，不指定泛型:
+``` java
+class GeneratorImpl<T> implements Generator<T>{
+    @Override
+    public T method() {
+        return null;
+    }
+}
+```
+实现泛型接口指定类型：
+``` java
+class GeneratorImpl<T> implements Generator<String>{
+    @Override
+    public String method() {
+        return "hello";
+    }
+}
+```
+3. 泛型方法
+``` java
+public static < E > void printArray( E[] inputArray )
+   {
+         for ( E element : inputArray ){
+            System.out.printf( "%s ", element );
+         }
+         System.out.println();
+    }
+```
+使用：
+``` java
+// 创建不同类型数组： Integer, Double 和 Character
+Integer[] intArray = { 1, 2, 3 };
+String[] stringArray = { "Hello", "World" };
+printArray( intArray  );
+printArray( stringArray  );
+
+> 静态泛型方法：类在实例化后才会真正传递类型参数，静态方法的加载会优先于类的实例化
+会在泛型参数传入之前被加载，所以静态方法是没办法使用类上声明的泛型的，
+要声明自己的泛型。
+
+## 项目中哪些地方使用了泛型
+1. 定义接口通用返回结果，Result< T >通过T根据返回的类型动态指定结果的数据类型
+2. 构建集合工具类（参考Collections的sort()和binarySearch())
+3. Excel处理类， ExcelUtil< T >用于指定excel导出的数据类型
